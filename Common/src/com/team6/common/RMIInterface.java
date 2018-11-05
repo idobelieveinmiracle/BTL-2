@@ -24,4 +24,5 @@ public interface RMIInterface extends Remote{
     public boolean changePassword(String username, String password, String oldPassword) throws RemoteException;
     public void changeDisplayName(String username, String name) throws RemoteException;
     public ArrayList<Match> getListMatch(String username) throws RemoteException;
+    public ArrayList<User> getScoreBoard() throws RemoteException;
 }

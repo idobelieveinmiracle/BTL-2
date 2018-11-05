@@ -13,8 +13,11 @@ import com.team6.common.RMIInterface;
 import com.team6.common.User;
 import com.team6.views.ChangeInfoForm;
 import com.team6.views.ChangePasswordForm;
+import com.team6.views.HistoryForm2;
 import com.team6.views.HomeForm;
 import com.team6.views.LoginForm;
+import com.team6.views.NewJFrame;
+import com.team6.views.ScoreBoardForm;
 import com.team6.views.SignUpForm;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -49,7 +52,9 @@ public class ClientMainController {
     private HomeForm homeForm;
     private ChangeInfoForm changeInfoForm;
     private ChangePasswordForm changePasswordForm;
-    private HistoryForm historyForm;
+    private HistoryForm2 historyForm;
+    private ScoreBoardForm scoreBoardForm;
+    private NewJFrame sb2;
     
     private User user;
     
@@ -79,7 +84,9 @@ public class ClientMainController {
         homeForm = new HomeForm();
         changeInfoForm = new ChangeInfoForm();
         changePasswordForm = new ChangePasswordForm();
-        historyForm = new HistoryForm();
+        historyForm = new HistoryForm2();
+        scoreBoardForm = new ScoreBoardForm();
+        sb2 = new NewJFrame();
         
         changeInfoForm.addBtnChangeActionListener(new MainControllerActionListener());
         changePasswordForm.addBtnChangeActionListener(new MainControllerActionListener());
@@ -102,6 +109,18 @@ public class ClientMainController {
         });
         
         historyForm.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e){
+                homeForm.setVisible(true);
+            }
+        });
+        
+        scoreBoardForm.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e){
+                homeForm.setVisible(true);
+            }
+        });
+        
+        sb2.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e){
                 homeForm.setVisible(true);
             }
@@ -318,6 +337,30 @@ public class ClientMainController {
                     ArrayList<Match> list = rmiServer.getListMatch(user.getUsername());
                     historyForm.setListMatches(list);
                     historyForm.setVisible(true);
+                } catch (RemoteException ex) {
+                    Logger.getLogger(ClientMainController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            
+            if (e.getSource().equals(homeForm.getBtnHistory())){
+                
+                try {
+                    homeForm.setVisible(false);
+                    ArrayList<Match> list = rmiServer.getListMatch(user.getUsername());
+                    historyForm.setListMatches(list);
+                    historyForm.setVisible(true);
+                } catch (RemoteException ex) {
+                    Logger.getLogger(ClientMainController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            
+            if (e.getSource().equals(homeForm.getBtnShowSB())){
+                
+                try {
+                    homeForm.setVisible(false);
+                    ArrayList<User> list = rmiServer.getScoreBoard();
+                    sb2.setListMatches(list);
+                    sb2.setVisible(true);
                 } catch (RemoteException ex) {
                     Logger.getLogger(ClientMainController.class.getName()).log(Level.SEVERE, null, ex);
                 }

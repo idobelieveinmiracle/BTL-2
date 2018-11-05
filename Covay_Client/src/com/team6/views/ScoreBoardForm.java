@@ -1,12 +1,14 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.team6.views;
 
-
 import com.team6.common.Match;
-import com.team6.views.StatusColumnCellRenderer;
+import com.team6.common.User;
 import java.awt.BorderLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import java.awt.FlowLayout;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -15,37 +17,31 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  *
  * @author Quoc Hung
  */
-public class HistoryForm extends JFrame{
+public class ScoreBoardForm extends JFrame{
     private JScrollPane scrListMatch;
     private JTable tblListMatch;
     private DefaultTableModel mdlListMatch;
     
-    public HistoryForm(){
-        super("Match");
+    public ScoreBoardForm(){
+        super("ScoreBoard");
         
         JPanel content = (JPanel) getContentPane();
         
         setListMatchesContent();
-        content.setLayout(new BorderLayout());
+        content.setLayout(new FlowLayout());
         
-        content.add(scrListMatch, BorderLayout.CENTER);
+        content.add(scrListMatch);
         pack();
         setResizable(false);
         setLocationRelativeTo(null);
     }
     
     private void setListMatchesContent(){
-        String[] columnNames = {"Match id", "Time", "Player 1", "Player 2", "Winner"};
+        String[] columnNames = {"No", "Username", "Name", "Score"};
         Object[][] data = {};
         
         tblListMatch = new JTable(){
@@ -63,25 +59,18 @@ public class HistoryForm extends JFrame{
         tblListMatch.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
     
-    public void setListMatches(ArrayList<Match> list){
+    public void setListMatches(ArrayList<User> list){
         int rowCount = mdlListMatch.getRowCount();
         System.out.println(rowCount);
         for (int i = 0; i < rowCount; i++){
             mdlListMatch.removeRow(0);
         }
-        
-        for (Match m: list){
-            System.out.println(m.getId()+" "+m.getTime()+" "+ m.getUser1()+" "+m.getUser2()+" "+ m.getUser1());
-            if (m.getWinner() == 1){
-                mdlListMatch.addRow(new Object[]{
-                    m.getId(), m.getTime(), m.getUser1(), m.getUser2(), m.getUser1()
-                });
-            } else {
-                mdlListMatch.addRow(new Object[]{
-                    m.getId(), m.getTime(), m.getUser1(), m.getUser2(), m.getUser2()
-                });
-            }        
+        int k = 1;
+        for (User u: list){
+            mdlListMatch.addRow(new Object[]{
+                k, u.getUsername(), u.getName(), u.getScore()
+            });    
+            k++;
         }
     }
-    
 }

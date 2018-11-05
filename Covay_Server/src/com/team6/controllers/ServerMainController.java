@@ -341,10 +341,36 @@ public class ServerMainController extends UnicastRemoteObject implements RMIInte
             
             while (rs.next()){
                 Match m = new Match(rs.getString("user1"), rs.getString("user2"));
+                m.setTime(rs.getString("time"));
                 m.setId(rs.getInt("id"));
                 m.setWinner(rs.getInt("winner"));
                 
                 list.add(m);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ServerMainController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return list;
+    }
+
+    @Override
+    public ArrayList<User> getScoreBoard() throws RemoteException {
+        ArrayList<User> list = new ArrayList<>();
+        String query = "SELECT * FROM tbl_user ORDER BY score DESC";
+        
+        try {
+            PreparedStatement stm = conn.prepareStatement(query);
+            
+            ResultSet rs = stm.executeQuery();
+            
+            while (rs.next()){
+                User u = new User();
+                u.setUsername(rs.getString("username"));
+                u.setName(rs.getString("name"));
+                u.setScore(rs.getInt("score"));
+                
+                list.add(u);
             }
         } catch (SQLException ex) {
             Logger.getLogger(ServerMainController.class.getName()).log(Level.SEVERE, null, ex);
