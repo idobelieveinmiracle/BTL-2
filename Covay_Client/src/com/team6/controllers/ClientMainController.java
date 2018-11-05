@@ -5,6 +5,7 @@
  */
 package com.team6.controllers;
 
+import com.team6.views.HistoryForm;
 import com.team6.common.ChessBoard;
 import com.team6.common.Message;
 import com.team6.common.RMIInterface;
@@ -36,7 +37,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-
 /**
  *
  * @author Quoc Hung
@@ -47,6 +47,7 @@ public class ClientMainController {
     private HomeForm homeForm;
     private ChangeInfoForm changeInfoForm;
     private ChangePasswordForm changePasswordForm;
+    private HistoryForm historyForm;
     
     private User user;
     
@@ -76,6 +77,7 @@ public class ClientMainController {
         homeForm = new HomeForm();
         changeInfoForm = new ChangeInfoForm();
         changePasswordForm = new ChangePasswordForm();
+        historyForm = new HistoryForm();
         
         changeInfoForm.addBtnChangeActionListener(new MainControllerActionListener());
         changePasswordForm.addBtnChangeActionListener(new MainControllerActionListener());
@@ -92,6 +94,12 @@ public class ClientMainController {
         });
         
         changePasswordForm.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e){
+                homeForm.setVisible(true);
+            }
+        });
+        
+        historyForm.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e){
                 homeForm.setVisible(true);
             }
@@ -299,6 +307,17 @@ public class ClientMainController {
                         Logger.getLogger(ClientMainController.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 } else JOptionPane.showMessageDialog(changePasswordForm, "Password nhập lại không trùng khớp");
+            }
+            
+            if (e.getSource().equals(homeForm.getBtnHistory())){
+                
+                try {
+                    homeForm.setVisible(false);
+                    historyForm.setListMatches(rmiServer.getListMatch(user.getUsername()));
+                    historyForm.setVisible(true);
+                } catch (RemoteException ex) {
+                    Logger.getLogger(ClientMainController.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
         

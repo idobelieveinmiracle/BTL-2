@@ -5,6 +5,7 @@
  */
 package com.team6.controllers;
 
+import com.team6.common.Match;
 import com.team6.common.Message;
 import com.team6.common.RMIInterface;
 import com.team6.common.User;
@@ -325,6 +326,31 @@ public class ServerMainController extends UnicastRemoteObject implements RMIInte
         } catch (SQLException ex) {
             Logger.getLogger(ServerMainController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    @Override
+    public ArrayList<Match> getListMatch(String username) throws RemoteException {
+        ArrayList<Match> list = new ArrayList<>();
+        String query = "SELECT * FROM tbl_match WHERE user1=? OR user2=? ORDER BY id DESC";
+        
+        try {
+            PreparedStatement stm = conn.prepareStatement(query);
+            stm.setString(1, username);
+            stm.setString(2, username);
+            ResultSet rs = stm.executeQuery();
+            
+            while (rs.next()){
+                Match m = new Match(rs.getString("user1"), rs.getString("user2"));
+                m.setId(rs.getInt("id"));
+                m.setWinner(rs.getInt("winner"));
+                
+                list.add(m);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ServerMainController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return list;
     }
     
 }

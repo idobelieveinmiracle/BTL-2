@@ -41,6 +41,8 @@ public class HomeForm extends JFrame{
     private JButton btnChangeInfo;
     private JButton btnChangePassword;
     private JButton btnResetList;
+    private JButton btnHistory;
+    private JButton btnShowSB;
     
     private GridBagConstraints c;
 
@@ -147,6 +149,8 @@ public class HomeForm extends JFrame{
         btnChangeInfo = new JButton("Change Information");
         btnChangePassword = new JButton("Change Password");   
         btnResetList = new JButton("Reset List");
+        btnHistory = new JButton("History");
+        btnShowSB = new JButton("Score Board");
         
         c = new GridBagConstraints();
         
@@ -158,6 +162,10 @@ public class HomeForm extends JFrame{
         changeInfoContent.add(btnChangeInfo, c);
         c.gridx = 1;
         changeInfoContent.add(btnChangePassword, c);
+        c.gridx = 2;
+        changeInfoContent.add(btnHistory, c);
+        c.gridx = 3;
+        changeInfoContent.add(btnShowSB, c);
         
         c.gridx = 0;
         listControllerContent.add(btnInvite, c);
@@ -207,6 +215,8 @@ public class HomeForm extends JFrame{
         btnInvite.addActionListener(log);
         btnChangePassword.addActionListener(log);
         btnResetList.addActionListener(log);
+        btnHistory.addActionListener(log);
+        btnShowSB.addActionListener(log);
     }
     
     public String getUsernameSelected(){
@@ -225,6 +235,14 @@ public class HomeForm extends JFrame{
     
     public void changeDisplayName(String newName){
         txtName.setText(newName);
+    }
+
+    public JButton getBtnHistory() {
+        return btnHistory;
+    }
+
+    public JButton getBtnShowSB() {
+        return btnShowSB;
     }
     
 }
