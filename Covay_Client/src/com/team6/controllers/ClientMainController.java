@@ -7,6 +7,7 @@ package com.team6.controllers;
 
 import com.team6.views.HistoryForm;
 import com.team6.common.ChessBoard;
+import com.team6.common.Match;
 import com.team6.common.Message;
 import com.team6.common.RMIInterface;
 import com.team6.common.User;
@@ -29,6 +30,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -313,7 +315,8 @@ public class ClientMainController {
                 
                 try {
                     homeForm.setVisible(false);
-                    historyForm.setListMatches(rmiServer.getListMatch(user.getUsername()));
+                    ArrayList<Match> list = rmiServer.getListMatch(user.getUsername());
+                    historyForm.setListMatches(list);
                     historyForm.setVisible(true);
                 } catch (RemoteException ex) {
                     Logger.getLogger(ClientMainController.class.getName()).log(Level.SEVERE, null, ex);

@@ -63,18 +63,17 @@ public class HistoryForm extends JFrame{
         
         mdlListMatch.setColumnIdentifiers(columnNames);   
         tblListMatch.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        tblListMatch.getColumnModel().getColumn(3).setCellRenderer(new StatusColumnCellRenderer());
     }
     
     public void setListMatches(ArrayList<Match> list){
         int rowCount = mdlListMatch.getRowCount();
-        
+        System.out.println(rowCount);
         for (int i = 0; i < rowCount; i++){
             mdlListMatch.removeRow(0);
         }
         
         for (Match m: list){
-            System.out.println(m.getId());
+            System.out.println(m.getId()+" "+m.getTime()+" "+ m.getUser1()+" "+m.getUser2()+" "+ m.getUser1());
             if (m.getWinner() == 1){
                 mdlListMatch.addRow(new Object[]{
                     m.getId(), m.getTime(), m.getUser1(), m.getUser2(), m.getUser1()
@@ -83,7 +82,7 @@ public class HistoryForm extends JFrame{
                 mdlListMatch.addRow(new Object[]{
                     m.getId(), m.getTime(), m.getUser1(), m.getUser2(), m.getUser2()
                 });
-            }                
+            }        
         }
     }
     
