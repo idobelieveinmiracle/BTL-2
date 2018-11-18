@@ -34,7 +34,8 @@ public class MatchHandlingThread extends Thread{
     private String username2;
     private Connection conn;
 
-    public MatchHandlingThread(IODataCollection player1IO, IODataCollection player2IO, String username1, String username2, Connection conn, HashMap<String, IODataCollection> mapOnlineUser) {
+    public MatchHandlingThread(IODataCollection player1IO, IODataCollection player2IO, String username1, 
+            String username2, Connection conn, HashMap<String, IODataCollection> mapOnlineUser) {
         this.mapOnlineUsers = mapOnlineUser;
         this.player2IO = player2IO;
         this.player1IO = player1IO;

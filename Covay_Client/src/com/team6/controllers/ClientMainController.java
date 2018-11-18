@@ -5,7 +5,6 @@
  */
 package com.team6.controllers;
 
-import com.team6.views.HistoryForm;
 import com.team6.common.ChessBoard;
 import com.team6.common.Match;
 import com.team6.common.Message;
@@ -13,10 +12,9 @@ import com.team6.common.RMIInterface;
 import com.team6.common.User;
 import com.team6.views.ChangeInfoForm;
 import com.team6.views.ChangePasswordForm;
-import com.team6.views.HistoryForm2;
+import com.team6.views.HistoryForm;
 import com.team6.views.HomeForm;
 import com.team6.views.LoginForm;
-import com.team6.views.NewJFrame;
 import com.team6.views.ScoreBoardForm;
 import com.team6.views.SignUpForm;
 import java.awt.event.ActionEvent;
@@ -52,9 +50,9 @@ public class ClientMainController {
     private HomeForm homeForm;
     private ChangeInfoForm changeInfoForm;
     private ChangePasswordForm changePasswordForm;
-    private HistoryForm2 historyForm;
+    private HistoryForm historyForm;
     private ScoreBoardForm scoreBoardForm;
-    private NewJFrame sb2;
+    private ScoreBoardForm sb2;
     
     private User user;
     
@@ -84,9 +82,9 @@ public class ClientMainController {
         homeForm = new HomeForm();
         changeInfoForm = new ChangeInfoForm();
         changePasswordForm = new ChangePasswordForm();
-        historyForm = new HistoryForm2();
+        historyForm = new HistoryForm();
         scoreBoardForm = new ScoreBoardForm();
-        sb2 = new NewJFrame();
+        sb2 = new ScoreBoardForm();
         
         changeInfoForm.addBtnChangeActionListener(new MainControllerActionListener());
         changePasswordForm.addBtnChangeActionListener(new MainControllerActionListener());
